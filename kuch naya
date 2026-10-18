@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special ✨</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.15);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            transition: all 0.4s ease;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            font-size: 24px;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .row-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 60px;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: #fff;
+            color: #4a4a4a;
+            border: 2px solid #ffb3c6;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            width: 100%;
+        }
+
+        .row-container .btn {
+            width: auto;
+        }
+
+        .btn:hover {
+            background-color: #ffe5ec;
+            border-color: #ff4b6e;
+            color: #ff4b6e;
+            transform: translateY(-2px);
+        }
+
+        /* Naughty input layout */
+        .input-box {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ffb3c6;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            outline: none;
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        .input-box:focus {
+            border-color: #ff4b6e;
+        }
+
+        #run-btn {
+            position: absolute;
+            transition: all 0.1s ease;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .success-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .response-text {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- QUESTION 1 -->
+    <div id="card-1" class="card">
+        <h1>we are best friends ❣️</h1>
+        <div class="row-container">
+            <button class="btn" id="run-btn" onmouseover="runAway()" onclick="runAway()">Yes 🥰</button>
+            <button class="btn" onclick="nextCard(1, 2)">No 😢</button>
+        </div>
+    </div>
+
+    <!-- QUESTION 2 -->
+    <div id="card-2" class="card hidden">
+        <h1>Who is the prettiest girl in the world? 👑</h1>
+        <div class="options-container">
+            <button class="btn" onclick="nextCard(2, 3)">Angelina Jolie</button>
+            <button class="btn" onclick="nextCard(2, 3)">Kendall Jenner</button>
+            <button class="btn" onclick="nextCard(2, 3)">The girl reading this sentence right now</button>
+        </div>
+    </div>
+
+    <!-- QUESTION 3: NEW AUTOMATIC TYPING TRICK -->
+    <div id="card-3" class="card hidden">
+        <h1>Tell me honestly, how are you? 👇</h1>
+        <p style="color: #999; font-size: 13px; margin-bottom: 15px;">(Type your feelings in the box below)</p>
+        <input type="text" id="fake-input" class="input-box" placeholder="Start typing here..." onkeydown="typeTrick(event)" autocomplete="off">
+        <button class="btn" onclick="showFinal()">Submit Answer 🌟</button>
+    </div>
+
+    <!-- FINAL SCREEN -->
+    <div id="card-final" class="card hidden">
+        <div class="success-icon">❤️</div>
+        <h1>You sent:</h1>
+        <p class="response-text">"apka message deka TU ab thk hun"</p>
+        <p style="color: #ff4b6e; font-weight: bold; font-size: 18px;">Aww! Knowing you are doing great just made my entire day! 🥰✨</p>
+    </div>
+
+    <script>
+        function nextCard(current, next) {
+            document.getElementById(`card-${current}`).classList.add('hidden');
+            document.getElementById(`card-${next}`).classList.remove('hidden');
+        }
+
+        function showFinal() {
+            const inputVal = document.getElementById('fake-input').value;
+            if(inputVal.trim() === "") {
+                alert("Please type something first! 😉");
+                return;
+            }
+            document.getElementById('card-3').classList.add('hidden');
+            document.getElementById('card-final').classList.remove('hidden');
+        }
+
+        function runAway() {
+            const btn = document.getElementById('run-btn');
+            const x = Math.random() * (window.innerWidth - 120) - (window.innerWidth / 2 - 60);
+            const y = Math.random() * (window.innerHeight - 120) - (window.innerHeight / 2 - 30);
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        // Secret typing string target
+        const secretPhrase = "apka message deka TU ab thk hun";
+        let currentIndex = 0;
+
+        function typeTrick(event) {
+            // Prevent actual key letters from appearing
+            event.preventDefault();
+            
+            const inputElement = document.getElementById('fake-input');
+            
+            // If she hits backspace, let her delete a character
+            if (event.key === "Backspace") {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    inputElement.value = secretPhrase.substring(0, currentIndex);
+                }
+                return;
+            }
+
+            // Ignore system keys like Shift, Control, Alt
+            if (event.key.length > 1) return;
+
+            // Feed her the next character of your sentence no matter what she presses
+            if (currentIndex < secretPhrase.length) {
+                currentIndex++;
+                inputElement.value = secretPhrase.substring(0, currentIndex);
+            }
+        }
+    </script>
+
+</body>
+</html>
